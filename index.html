@@ -4,102 +4,30 @@
 <head>
     <!-- <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8"> -->
-    <title>Info windows</title>
+    <title>Google Maps w/Angular</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI"></script>
-    <script type="text/javascript" src="cities.js"></script>
-    <script type="text/javascript" src="controller.js"></script>
-    <style>
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    
-    #map {
-        height: 100%;
-        width: 80%;
-    }
-    #list {
-      width: 20%;
-    }
-    </style>
+    <script type="text/javascript" src="js/cities.js"></script>
+    <script type="text/javascript" src="js/controller.js"></script>
+    <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body ng-controller="mapsController">
-
-    <div id="map" style="float: left;">
+    <!-- <div class="container"> -->
+        <!-- <div class="row"> -->
+            <div id="map" class="four fifths">
+            </div>
+            <div id="list" class="one fifths">
+                <div ng-repeat="city in cities">
+                    {{city.yearRank}}:{{city.city}}
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
     </div>
-    <div id="list" style="float: right;">
-      <div ng-repeat="city in cities">
-            {{city.yearRank}}:{{city.city}}
-      </div>
-    </div>
-    <script>
-    // This example displays a marker at the center of Australia.
-    // When the user clicks the marker, an info window opens.
-    // function createMarker(map, position, city, state) {
-    //     var marker = new google.maps.Marker({
-    //         position: position,
-    //         map: map,
-    //         title: city + ', ' + state
-    //     });
-    //      marker.addListener('click', function() {
-    //         infowindow.open(map, marker);
-    //     });
-    // }
-
-    // function initMap() {
-    //     // console.log(cities[5].latLon);
-    //     var ndx = 38;
-    //     var latLon = cities[ndx].latLon.split(',', 2);
-    //     // console.log(latLon);
-    //     var uluru = {
-    //         lat: Number(latLon[0]),
-    //         lng: Number(latLon[1])
-    //     };
-
-    //     var map = new google.maps.Map(document.getElementById('map'), {
-    //         zoom: 4,
-    //         center: uluru
-    //     });
-
-    //     var contentString = '<div id="content">' +
-    //         '<div id="siteNotice">' +
-    //         '</div>' +
-    //         '<h1 id="firstHeading" class="firstHeading">' + cities[ndx].city + '</h1>' +
-    //         '<div id="bodyContent">' +
-    //         '<p><b>' + cities[ndx].city + ', ' + cities[ndx].state + '</b></p>' +
-    //         '<p>Population is ' + cities[ndx].yearEstimate + ' which is ' + cities[ndx].change +
-    //         ' over the last census count of ' + cities[ndx].lastCensus + '</p>' +
-    //         '<p>' + cities[ndx].city + ' occupies ' + cities[ndx].landArea + ' ( density = ' + cities[ndx].lastPopDensity + ')</p>' +
-    //         '</div>' +
-    //         '</div>';
-
-    //     var infowindow = new google.maps.InfoWindow({
-    //         content: contentString
-    //     });
-
-    //     createMarker(map, uluru, cities[ndx].city, cities[ndx].state);
-    //     ndx = 37;
-    //     latLon = cities[ndx].latLon.split(',', 2);
-    //     // console.log(latLon);
-    //      uluru = {
-    //         lat: Number(latLon[0]),
-    //         lng: Number(latLon[1])
-    //     };
-    //     createMarker(map, uluru, cities[ndx].city, cities[ndx].state);
-        // var marker = new google.maps.Marker({
-        //     position: uluru,
-        //     map: map,
-        //     title: cities[ndx].city + ', ' + cities[ndx].state
-        // });
-        // marker.addListener('click', function() {
-        //     infowindow.open(map, marker);
-        // });
-    // }
-    </script>
+    <script type="text/javascript" src="vendors/groundwork-master/js/groundwork.all.js"></script>
 </body>
 
 </html>
