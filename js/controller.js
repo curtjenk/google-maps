@@ -1,5 +1,5 @@
 var mapsApp = angular.module('mapsApp', []);
-mapsApp.controller('mapsController', function($scope) {
+mapsApp.controller('mapsController', function($scope, $compile) {
 
   $scope.markers = [];
   $scope.cities = cities;
@@ -10,6 +10,7 @@ mapsApp.controller('mapsController', function($scope) {
     //trigger a click event on a particular marker
     $scope.markers[mNdx].setAnimation(google.maps.Animation.DROP);
     google.maps.event.trigger($scope.markers[mNdx], 'click');
+    console.log(mNdx);
   };
 
   $scope.map = new google.maps.Map(document.getElementById('map'), {
@@ -17,19 +18,21 @@ mapsApp.controller('mapsController', function($scope) {
     center: new google.maps.LatLng(40.0000, -98.0000)
   });
 
-  //directionsDisplay.setMap(map);
+  directionsDisplay.setMap($scope.map);
 
-  var onChangeHandler = function() {
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
+  $scope.onChangeHandler = function(_latLonValue) {
+    calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue);
   };
 
 
   function createMarker(city) {
     // console.log(city);
-    var latLon = city.latLon.split(',', 2);
-    var lat = Number(latLon[0]);
-    var lon = Number(latLon[1]);
+    var _latLon = city.latLon.split(',', 2);
+    var lat = Number(_latLon[0]);
+    var lon = Number(_latLon[1]);
     var contentString = getContentString(city);
+
+    //console.log(latLon);
 
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(lat, lon),
@@ -39,7 +42,7 @@ mapsApp.controller('mapsController', function($scope) {
     });
 
     marker.addListener('click', function() {
-      infowindow.setContent(contentString);
+      infowindow.setContent(contentString[0]);
       infowindow.open($scope.map, marker);
     });
 
@@ -51,7 +54,8 @@ mapsApp.controller('mapsController', function($scope) {
   });
 
   function getContentString(city) {
-    var contentString = '<div id="content">' +
+
+    var _content = '<div id="content">' +
       '<div id="siteNotice">' +
       '</div>' +
       '<h1 class="firstHeading">' + city.city + '</h1>' +
@@ -62,10 +66,10 @@ mapsApp.controller('mapsController', function($scope) {
       '<div><strong>Population Density : </strong>' + city.lastPopDensity + ' </div> ' +
       '<div><strong>State : </strong>' + city.state + ' </div> ' +
       '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
-      '<div><a href="">Directons To</a></div>' +
+      '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons To</a></div>' +
       '</div>' +
       '</div>';
-    return contentString;
+    return $compile(_content)($scope); //contentString;
   }
 
 
@@ -73,11 +77,26 @@ mapsApp.controller('mapsController', function($scope) {
     createMarker(cities[i]);
   }
 
-  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  function calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue) {
+    console.log(_latLonValue);
+
+    var _latLon = _latLonValue.split(',', 2);
+
+    console.log(_latLon);
+
+    var lat = Number(_latLon[0]);
+    var lon = Number(_latLon[1]);
+
+    var _destination = new google.maps.LatLng(lat, lon);
+    var _origin = new google.maps.LatLng(33.7629, -84.4227);
+
     directionsService.route({
-      origin: document.getElementById('start').value,
-      destination: document.getElementById('end').value,
+      // origin: document.getElementById('start').value,
+      // destination: document.getElementById('end').value,
+      origin: _origin,
+      destination: _destination,
       travelMode: google.maps.TravelMode.DRIVING
+
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
