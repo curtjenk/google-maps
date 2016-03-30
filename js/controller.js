@@ -1,6 +1,25 @@
-var mapsApp = angular.module('mapsApp', []);
-mapsApp.controller('mapsController', function($scope) {
+var mapsApp = angular.module('mapsApp', ['ngDialog']);
+mapsApp.controller('mapsController', function($scope, ngDialog) {
 
+
+    $scope.showInfo = function(city) {
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading">' + city.city + '</h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>' + city.city + ', ' + city.state + '</b></p>' +
+            '<p>Population is ' + city.yearEstimate + ' which is ' + city.change +
+            ' over the last census count of ' + city.lastCensus + '</p>' +
+            '<p>' + city.city + ' occupies ' + city.landArea + ' ( density = ' + city.lastPopDensity + ')</p>' +
+            '</div>' +
+            '</div>';
+        ngDialog.open({
+            template: contentString,
+            plain: true,
+            className: 'ngdialog-theme-default'
+        });
+    };
 
     $scope.map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
@@ -39,7 +58,7 @@ mapsApp.controller('mapsController', function($scope) {
     }
 
     $scope.cities = cities;
-    
+
     for (var i = 0; i < cities.length; i++) {
         createMarker(cities[i]);
     }
