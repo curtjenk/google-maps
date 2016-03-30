@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI"></script>
     <script type="text/javascript" src="js/cities.js"></script>
+    <script type="text/javascript" src="js/EasingAnimator.js"></script>
     <script type="text/javascript" src="js/controller.js"></script>
     <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
     <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css">
@@ -24,9 +25,10 @@
         </div>
         <div id="cities-panel" class="two twelfth centered">
             <div ng-repeat="city in cities" class="left">
-                <div class="city-name">{{city.yearRank}} : {{city.city}}</div>
+                <!-- <div class="city-name">{{city.yearRank}} : {{city.city}}</div> -->
                 <div class="info-button">
-                     <a class="blue button" href="#" ng-click="showInfoClick($index)">Show Info</a>
+                    <a class="icon-zoom-in" href="" ng-click="zoomClick($index)"></a>
+                    <a class="asphalt button" href="#" ng-click="showInfoClick($index)">{{city.yearRank}} : {{city.city}}</a>
                 </div>
             </div>
         </div>

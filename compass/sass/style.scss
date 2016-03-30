@@ -11,12 +11,22 @@
 #cities-panel {
     overflow: auto;
     height: 100vh;
-    font-size: 14px;
+    font-size: 12px;
+    padding: 2px;
     .city-name {
       font-weight: bold;
       margin-left: 2px;
     }
     .info-button {
-        margin-left: 15px;
+        margin-left: 2px;
+        width: 100%;
+        padding-bottom: 5px;
+    }
+    .button {
+      box-shadow: 1px 1px 5px black;
+    }
+    .icon-zoom-in {
+      font-size: 18px;
+      padding-left: 2px;
     }
 }
