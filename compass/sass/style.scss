@@ -1,0 +1,22 @@
+#map {
+    height: 100vh;
+}
+
+.top-row {
+    height: 5vh;
+    width: 100%;
+    background-color: #6BB9FF;
+}
+
+#cities-panel {
+    overflow: auto;
+    height: 100vh;
+    font-size: 14px;
+    .city-name {
+      font-weight: bold;
+      margin-left: 2px;
+    }
+    .info-button {
+        margin-left: 15px;
+    }
+}

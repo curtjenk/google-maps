@@ -11,9 +11,10 @@ body {
 .top-row {
   height: 5vh;
   width: 100%;
-  background-color: #28D0FF;
+  background-color: #6BB9FF;
 }
 #list {
    overflow: auto;
    height: 100vh;
+   font-size: 14px;
 }

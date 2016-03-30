@@ -1,0 +1,27 @@
+/* line 1, ../compass/sass/style.scss */
+#map {
+  height: 100vh;
+}
+
+/* line 5, ../compass/sass/style.scss */
+.top-row {
+  height: 5vh;
+  width: 100%;
+  background-color: #6BB9FF;
+}
+
+/* line 11, ../compass/sass/style.scss */
+#cities-panel {
+  overflow: auto;
+  height: 100vh;
+  font-size: 14px;
+}
+/* line 15, ../compass/sass/style.scss */
+#cities-panel .city-name {
+  font-weight: bold;
+  margin-left: 2px;
+}
+/* line 19, ../compass/sass/style.scss */
+#cities-panel .info-button {
+  margin-left: 15px;
+}

@@ -11,11 +11,8 @@
     <script type="text/javascript" src="js/cities.js"></script>
     <script type="text/javascript" src="js/controller.js"></script>
     <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
-    <script src="vendors/ngdialog-master/js/ngDialog.js"></script>
     <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css">
-    <link type="text/css" rel="stylesheet" href="vendors/ngdialog-master/css/ngDialog.css">
-    <link type="text/css" rel="stylesheet" href="vendors/ngdialog-master/css/ngDialog-theme-default.css">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body ng-controller="mapsController">
@@ -23,13 +20,13 @@
     <div class="row top-row">
     </div>
     <div class="row">
-        <div id="map" class="four fifths">
+        <div id="map" class="ten twelfth">
         </div>
-        <div id="list" class="one fifths">
-            <div ng-repeat="city in cities">
-                {{city.yearRank}}:{{city.city}}
-                <div>
-                    <a class="blue button" href="#" ng-click="showInfo(city)">Show Info</a>
+        <div id="cities-panel" class="two twelfth centered">
+            <div ng-repeat="city in cities" class="left">
+                <div class="city-name">{{city.yearRank}} : {{city.city}}</div>
+                <div class="info-button">
+                     <a class="blue button" href="#" ng-click="showInfoClick($index)">Show Info</a>
                 </div>
             </div>
         </div>
