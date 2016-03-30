@@ -24,9 +24,9 @@
         </div>
         <div id="cities-panel" class="two twelfth centered">
             <div ng-repeat="city in cities" class="left">
-                <div class="city-name">{{city.yearRank}} : {{city.city}}</div>
+                <!-- <div class="city-name">{{city.yearRank}} : {{city.city}}</div> -->
                 <div class="info-button">
-                     <a class="blue button" href="#" ng-click="showInfoClick($index)">Show Info</a>
+                     <a class="asphalt button" href="#" ng-click="showInfoClick($index)">{{city.yearRank}} : {{city.city}}</a>
                 </div>
             </div>
         </div>
