@@ -1,27 +1,70 @@
 var mapsApp = angular.module('mapsApp', []);
 mapsApp.controller('mapsController', function($scope, $compile) {
 
-  $scope.markers = [];
-  $scope.cities = cities;
+
+  var originalCenter = new google.maps.LatLng(40.0000, -98.0000);
+  var originalZoom = 4;
+  var clickZoom = 6;
+  var finalZoom = 11;
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
 
-  $scope.showInfoClick = function(mNdx) {
-    //trigger a click event on a particular marker
-    $scope.markers[mNdx].setAnimation(google.maps.Animation.DROP);
-    google.maps.event.trigger($scope.markers[mNdx], 'click');
-    console.log(mNdx);
-  };
+  $scope.markers = [];
+  $scope.cities = cities;
 
   $scope.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: new google.maps.LatLng(40.0000, -98.0000)
+    zoom: originalZoom,
+    center: originalCenter
   });
 
   directionsDisplay.setMap($scope.map);
 
   $scope.onChangeHandler = function(_latLonValue) {
     calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue);
+  };
+
+  $scope.showInfoClick = function(mNdx) {
+    //trigger a click event on a particular marker
+    $scope.markers[mNdx].setAnimation(google.maps.Animation.DROP);
+    google.maps.event.trigger($scope.markers[mNdx], 'click');
+  };
+
+  var easingAnimator = new EasingAnimator({
+    easingInterval: 500,
+    duration: 2000,
+    step: 100,
+    callBack: function(latLng) {
+      $scope.map.setCenter(latLng);
+      $scope.map.setZoom(clickZoom);
+    },
+    finalCallBack: function() {
+      console.log("all done!!!!");
+      $scope.map.setZoom(11);
+    }
+  });
+
+  // var easingAnimator = EasingAnimator.makeFromCallback(function(latLng) {
+  //     $scope.map.setCenter(latLng);
+  //     $scope.map.setZoom(4);
+  // });
+
+  $scope.zoomClick = function(mNdx) {
+    //trigger a click event on a particular marker
+    // $scope.map.panTo($scope.markers[mNdx].position);
+
+    // var point = originalCenter;
+    var point = $scope.map.getCenter();
+    var destinationPoint = {
+      lat: $scope.markers[mNdx].position.lat(),
+      lng: $scope.markers[mNdx].position.lng()
+    };
+    $scope.map.setZoom(clickZoom);
+
+    easingAnimator.easeProp({
+      lat: point.lat(),
+      lng: point.lng()
+    }, destinationPoint);
+
   };
 
 
