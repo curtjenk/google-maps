@@ -54,6 +54,7 @@ mapsApp.controller('mapsController', function($scope) {
             '<div><strong>Population Density : </strong>' + city.lastPopDensity + ' </div> ' +
             '<div><strong>State : </strong>' + city.state + ' </div> ' +
             '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
+            '<div><a href="">Directons To</a></div>' +
             '</div>' +
             '</div>';
         return contentString;
