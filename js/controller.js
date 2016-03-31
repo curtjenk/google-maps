@@ -29,6 +29,11 @@ mapsApp.controller('mapsController', function($scope, $compile) {
     google.maps.event.trigger($scope.markers[mNdx], 'click');
   };
 
+  var zoomAnimator = new ZoomAnimator({
+        zoomInterval: 500,
+        duration: 100
+  });
+
   var easingAnimator = new EasingAnimator({
     easingInterval: 500,
     duration: 2000,
@@ -38,10 +43,21 @@ mapsApp.controller('mapsController', function($scope, $compile) {
       $scope.map.setZoom(clickZoom);
     },
     finalCallBack: function() {
-      console.log("all done!!!!");
-      $scope.map.setZoom(11);
+      console.log("Zooming in");
+      zoomAnimator.zoomIn(
+        $scope.map.getZoom(), 
+        11, 
+        function(zoom) {
+            console.log("IN = " + zoom);
+            $scope.map.setZoom(zoom);
+        }, 
+        function() {
+        }
+    );
     }
   });
+
+  
 
   // var easingAnimator = EasingAnimator.makeFromCallback(function(latLng) {
   //     $scope.map.setCenter(latLng);
@@ -58,12 +74,27 @@ mapsApp.controller('mapsController', function($scope, $compile) {
       lat: $scope.markers[mNdx].position.lat(),
       lng: $scope.markers[mNdx].position.lng()
     };
-    $scope.map.setZoom(clickZoom);
+    //$scope.map.setZoom(clickZoom);
 
-    easingAnimator.easeProp({
-      lat: point.lat(),
-      lng: point.lng()
-    }, destinationPoint);
+    // easingAnimator.easeProp({
+    //   lat: point.lat(),
+    //   lng: point.lng()
+    // }, destinationPoint);
+    console.log("Starting the zoom out at " + $scope.map.getZoom() + " End=6");
+    zoomAnimator.zoomOut(
+        $scope.map.getZoom(), 
+        6, 
+        function(zoom) {
+            console.log("OUT = " + zoom);
+            $scope.map.setZoom(zoom);
+        }, 
+        function() {
+            easingAnimator.easeProp({
+                lat: point.lat(),
+                lng: point.lng()
+            }, destinationPoint);
+        }
+    );
 
   };
 
