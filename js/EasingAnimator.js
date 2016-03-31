@@ -40,3 +40,51 @@ EasingAnimator.prototype.easeProp = function(obj, propDict){
         self.callBack(out_vals);
     }, self.step);
 };
+
+/////// ---------------------------
+
+var ZoomAnimator = function(opt) {
+    opt = opt || {};
+    this.zoomInterval = opt.zoomInterval;
+    this.duration = opt.duration;
+};
+//increment start until reach end
+ZoomAnimator.prototype.zoomIn = function(start, end, callBackFunc, completeFunc) {
+    var self = this;
+    var t = start;
+    if (start >= end) {
+        completeFunc();
+        return;
+    }
+    clearInterval(self.zoomInterval);
+    self.zoomInterval = setInterval(function() {
+        if (t>end) {
+            clearInterval(self.zoomInterval);
+            console.log("ZoomIn: Terminating");
+            completeFunc();
+            return;
+        }
+        callBackFunc(t);
+        t += 1;
+    }, self.duration);
+};
+//decrement start until reach end
+ZoomAnimator.prototype.zoomOut = function(start, end, callBackFunc, completeFunc) {
+    var self = this;
+    var t = start;
+    if (start <= end) {
+        completeFunc();
+        return;
+    }
+    clearInterval(self.zoomInterval);
+    self.zoomInterval = setInterval(function() {
+        if (t<end) {
+            clearInterval(self.zoomInterval);
+             console.log("ZoomOut: Terminating");
+            completeFunc();
+            return;
+        }
+        callBackFunc(t);
+         t -= 1;
+    }, self.duration);
+};
