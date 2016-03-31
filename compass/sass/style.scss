@@ -13,8 +13,8 @@
     height: 100vh;
     min-width: 165px;
     font-size: 12px;
-    padding: 2px;
-    box-shadow: -1px 1px 5px black;
+    padding: 10px;
+    box-shadow: -1px 1px 25px black;
     background-color: lightgray;
 
     .city-name {
@@ -33,4 +33,11 @@
       font-size: 18px;
       padding-left: 2px;
     }
+    .place-selector {
+      text-align: center;
+      // font-size: 14px;
+    }
+}
+select {
+  height: 20px;
 }

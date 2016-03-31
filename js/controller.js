@@ -1,4 +1,9 @@
-var mapsApp = angular.module('mapsApp', []);
+var mapsApp = angular.module('mapsApp',
+[
+  'ngRoute',
+  'angularjs-dropdown-multiselect'
+]);
+
 mapsApp.controller('mapsController', function($scope, $compile) {
 
 
@@ -8,6 +13,7 @@ mapsApp.controller('mapsController', function($scope, $compile) {
   var finalZoom = 11;
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
+
 
   $scope.markers = [];
   $scope.cities = cities;
@@ -19,19 +25,90 @@ mapsApp.controller('mapsController', function($scope, $compile) {
 
   directionsDisplay.setMap($scope.map);
 
+  $scope.example1model = [];
+  $scope.example1data = normalizedPlaces(); //[ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
+  $scope.example5customTexts = {buttonDefaultText: 'Place Types'};
+  $scope.example10settings = {selectionLimit: 5};
+
   $scope.onChangeHandler = function(_latLonValue) {
     calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue);
   };
 
   $scope.showInfoClick = function(mNdx) {
-    //trigger a click event on a particular marker
-    $scope.markers[mNdx].setAnimation(google.maps.Animation.DROP);
-    google.maps.event.trigger($scope.markers[mNdx], 'click');
+    var _aPlaceTypes = [];
+
+    for (i=0; i < $scope.example1model.length; i++) {
+      _aPlaceTypes.push($scope.example1data[ $scope.example1model[i].id ].original);
+    }
+
+    //console.log(_aPlaceTypes);
+
+    if ( _aPlaceTypes.length > 0 ) {
+       // what we want to do?
+       placesSearch(mNdx, _aPlaceTypes);
+    } else {
+      //trigger a click event on a particular marker
+      $scope.markers[mNdx].setAnimation(google.maps.Animation.DROP);
+      google.maps.event.trigger($scope.markers[mNdx], 'click');
+    }
   };
 
+  function placesSearch(ndxOfCityClicked, _arr) {
+     //pyrmont should be the location/city selected,
+     var cityLocation = {
+         lat: $scope.markers[ndxOfCityClicked].position.lat(),
+         lng: $scope.markers[ndxOfCityClicked].position.lng()
+     };
+
+     ///???? do we really need to create a new map?
+    //  $scope.map  = new google.maps.Map(document.getElementById('map'), {
+    //      center: cityLocation,
+    //      zoom: 10
+    //  });
+
+    $scope.map.setCenter(cityLocation);
+    $scope.map.setZoom(10);
+
+     var service = new google.maps.places.PlacesService($scope.map);
+
+     console.log(_arr);
+     service.nearbySearch({
+         location: cityLocation,
+         radius: 50000,
+         type: _arr //use array of selected placesTypes
+     }, placesSearchcallback);
+  }
+
+  function placesSearchcallback(results, status) {
+    //console.log(results);
+     if (status === google.maps.places.PlacesServiceStatus.OK) {
+         for (var i = 0; i < results.length; i++) {
+             createPlacesMarker(results[i]);
+         }
+     }
+  }
+
+  function createPlacesMarker(place) {
+     var placeLoc = place.geometry.location;
+     var marker = new google.maps.Marker({
+         map: $scope.map,
+         position: place.geometry.location
+     });
+
+    //  google.maps.event.addListener(marker, 'click', function() {
+    //      infowindow.setContent(place.name);
+    //      infowindow.open($scope.map, this);
+    //  });
+
+     marker.addListener('click', function() {
+       infowindow.setContent(place.name); //contentString[0]);
+       infowindow.open($scope.map, marker);
+     });
+  }
+
   var zoomAnimator = new ZoomAnimator({
-        zoomInterval: 500,
-        duration: 100
+    zoomInterval: 500,
+    duration: 100
   });
 
   var easingAnimator = new EasingAnimator({
@@ -45,19 +122,18 @@ mapsApp.controller('mapsController', function($scope, $compile) {
     finalCallBack: function() {
       console.log("Zooming in");
       zoomAnimator.zoomIn(
-        $scope.map.getZoom(), 
-        11, 
+        $scope.map.getZoom(),
+        11,
         function(zoom) {
-            console.log("IN = " + zoom);
-            $scope.map.setZoom(zoom);
-        }, 
-        function() {
-        }
-    );
+          console.log("IN = " + zoom);
+          $scope.map.setZoom(zoom);
+        },
+        function() {}
+      );
     }
   });
 
-  
+
 
   // var easingAnimator = EasingAnimator.makeFromCallback(function(latLng) {
   //     $scope.map.setCenter(latLng);
@@ -82,18 +158,18 @@ mapsApp.controller('mapsController', function($scope, $compile) {
     // }, destinationPoint);
     console.log("Starting the zoom out at " + $scope.map.getZoom() + " End=6");
     zoomAnimator.zoomOut(
-        $scope.map.getZoom(), 
-        6, 
-        function(zoom) {
-            console.log("OUT = " + zoom);
-            $scope.map.setZoom(zoom);
-        }, 
-        function() {
-            easingAnimator.easeProp({
-                lat: point.lat(),
-                lng: point.lng()
-            }, destinationPoint);
-        }
+      $scope.map.getZoom(),
+      6,
+      function(zoom) {
+        console.log("OUT = " + zoom);
+        $scope.map.setZoom(zoom);
+      },
+      function() {
+        easingAnimator.easeProp({
+          lat: point.lat(),
+          lng: point.lng()
+        }, destinationPoint);
+      }
     );
 
   };
@@ -143,7 +219,7 @@ mapsApp.controller('mapsController', function($scope, $compile) {
       '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons To</a></div>' +
       '</div>' +
       '</div>';
-    return $compile(_content)($scope); //contentString;
+    return $compile(_content)($scope); //contentString; RETURN'd as ARRAY!!
   }
 
 

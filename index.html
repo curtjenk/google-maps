@@ -5,14 +5,9 @@
     <!-- <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8"> -->
     <title>Google Maps w/Angular</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI"></script>
-    <script type="text/javascript" src="js/cities.js"></script>
-    <script type="text/javascript" src="js/EasingAnimator.js"></script>
-    <script type="text/javascript" src="js/controller.js"></script>
-    <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
     <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css">
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="vendors/angularjs-multiselect/pages/stylesheets/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 
@@ -21,7 +16,8 @@
     <!-- <div class="row top-row"></div> -->
     <div class="row">
       <div id="map" class="four fifths"></div>
-      <div id="cities-panel" class="one fifth centered">
+      <div id="cities-panel" class="one fifth ">
+        <div ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example10settings"></div>
         <div ng-repeat="city in cities" class="left">
           <!-- <div class="city-name">{{city.yearRank}} : {{city.city}}</div> -->
           <div class="info-button">
@@ -33,7 +29,19 @@
         </div>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI&libraries=places&v=3.exp"></script>
+    <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
     <script type="text/javascript" src="vendors/groundwork-master/js/groundwork.all.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+    <script type="text/javascript" src="vendors/angularjs-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+    <script type="text/javascript" src="js/cities.js"></script>
+    <script type="text/javascript" src="js/EasingAnimator.js"></script>
+    <script type="text/javascript" src="js/googleplacestypes.js"></script>
+    <script type="text/javascript" src="js/controller.js"></script>
   </body>
 
 </html>
