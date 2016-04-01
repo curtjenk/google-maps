@@ -25,6 +25,21 @@
   font-style: italic;
   .left-side {
     float: left;
+    #left-left {
+      float: left;
+    }
+    #right-left {
+      float: right;
+    }
+    #ico {
+      clear: both;
+    }
+    div {
+      font-size: 10px;
+    }
+    img {
+      height: 20px;
+    }
   }
   .right-side {
     float: right;

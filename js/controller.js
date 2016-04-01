@@ -263,8 +263,13 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         '<div><strong>State : </strong>' + city.state + ' </div> ' +
         '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
         '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons</a></div>' +
-        '<div class="weather-info"><h3>Weather Conditions</h3></div>' +
-        '<div><div class="left-side"><strong>&nbsp;Temp : </strong>' + weather.currTemp + '</div><div class="right-side"><img ng-src="' + weather.weatherIconURL + '"> </div></div> ' +
+        '<div class="weather-info">' + 
+              '<div class="left-side">' + 
+                    '<h3>Weather Conditions</h3>' +
+                    '<div id="left-left">&deg;' + weather.currTemp + '</div><div id="right-left">' + weather.weatherMain +'</div>' + 
+                    '<div id="ico"><img ng-src="img/sun.ico"> ' + weather.sunriseLocalTime() + ' <img ng-src="img/moon.ico"> ' + weather.sunsetLocalTime() + '</div>' + 
+              '</div>' +
+              '<div class="right-side"><img ng-src="' + weather.weatherIconURL + '"></div> ' +
         '</div>' +
         '</div>';
       return $compile(_content)($scope); //contentString; RETURN'd as ARRAY!!
