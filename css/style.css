@@ -3,44 +3,28 @@
   height: 100vh;
 }
 
-/* line 11, ../compass/sass/style.scss */
-#cities-panel {
-  overflow: auto;
-  height: 100vh;
-  min-width: 165px;
-  font-size: 12px;
-  padding: 10px;
-  box-shadow: -1px 1px 25px black;
-  background-color: lightgray;
-}
-/* line 20, ../compass/sass/style.scss */
-#cities-panel .city-name {
-  font-weight: bold;
-  margin-left: 2px;
-}
-/* line 24, ../compass/sass/style.scss */
-#cities-panel .info-button {
-  margin-left: 2px;
-  width: 100%;
-  padding-bottom: 5px;
-}
-/* line 29, ../compass/sass/style.scss */
-#cities-panel .button {
-  box-shadow: 1px 1px 5px black;
-}
-/* line 32, ../compass/sass/style.scss */
-#cities-panel .icon-zoom-in {
-  font-size: 18px;
-  padding-left: 2px;
-}
-/* line 36, ../compass/sass/style.scss */
-#cities-panel .place-selector {
-  text-align: center;
+/* line 9, ../compass/sass/style.scss */
+.info-button {
+  font-size: 20px;
 }
 
-/* line 41, ../compass/sass/style.scss */
-select {
-  height: 20px;
+/* line 12, ../compass/sass/style.scss */
+.btn-group {
+  display: inline;
+}
+
+/* line 15, ../compass/sass/style.scss */
+.places-select {
+  padding: 0;
+}
+
+/* line 19, ../compass/sass/style.scss */
+.btn-group .dropdown-toggle {
+  width: 100%;
+}
+/* line 22, ../compass/sass/style.scss */
+.btn-group .btn:first-child {
+  margin-bottom: 20px;
 }
 
 /* line 45, ../compass/sass/style.scss */
