@@ -26,3 +26,17 @@
 .btn-group .btn:first-child {
   margin-bottom: 20px;
 }
+
+/* line 45, ../compass/sass/style.scss */
+.weather-info {
+  font-weight: bold;
+  font-style: italic;
+}
+/* line 48, ../compass/sass/style.scss */
+.weather-info .left-side {
+  float: left;
+}
+/* line 51, ../compass/sass/style.scss */
+.weather-info .right-side {
+  float: right;
+}

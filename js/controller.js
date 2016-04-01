@@ -1,9 +1,7 @@
 var mapsApp = angular.module('mapsApp', [
   'ngRoute',
   'angularjs-dropdown-multiselect',
-  'ngMaterial',
-  // 'ngMessages',
-  // 'material.svgAssetsCache'
+  'ngMaterial'
 ]);
 
 mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSidenav, $log) {
@@ -18,7 +16,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
 
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
-    $scope.isOpenRight = function(){
+    $scope.isOpenRight = function() {
       return $mdSidenav('right').isOpen();
     };
 
@@ -39,6 +37,23 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
     };
     $scope.example10settings = {
       selectionLimit: 5
+    };
+
+    var clickedOnMarker = new google.maps.Marker({});
+
+    $scope.getWeatherHandler = function(cityYearRank) {
+      var apiKey = '7496eb8b9ef9616cf145982ce0a992fe';
+      var cityNdx = Number(cityYearRank) - 1;
+      var city = cities[cityNdx];
+      // console.log(city);
+      weatherSearchByCity(city.city, apiKey, function(weatherData) {
+        // console.log(weatherData);
+        // console.log(weatherData.sunriseToDate());
+        var contentString = getContentStringWeather(city, weatherData);
+        infowindow.setContent(contentString[0]);
+        infowindow.open($scope.map, clickedOnMarker);
+      });
+
     };
 
     $scope.onChangeHandler = function(_latLonValue) {
@@ -72,13 +87,13 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       };
 
       ///???? do we really need to create a new map?
-      //  $scope.map  = new google.maps.Map(document.getElementById('map'), {
-      //      center: cityLocation,
-      //      zoom: 10
-      //  });
+      $scope.map = new google.maps.Map(document.getElementById('map'), {
+        center: cityLocation,
+        zoom: 10
+      });
 
-      $scope.map.setCenter(cityLocation);
-      $scope.map.setZoom(10);
+      // $scope.map.setCenter(cityLocation);
+      // $scope.map.setZoom(10);
 
       var service = new google.maps.places.PlacesService($scope.map);
 
@@ -145,7 +160,6 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
     });
 
 
-
     // var easingAnimator = EasingAnimator.makeFromCallback(function(latLng) {
     //     $scope.map.setCenter(latLng);
     //     $scope.map.setZoom(4);
@@ -205,6 +219,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       marker.addListener('click', function() {
         infowindow.setContent(contentString[0]);
         infowindow.open($scope.map, marker);
+        clickedOnMarker = marker;
       });
 
       $scope.markers.push(marker);
@@ -227,7 +242,29 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         '<div><strong>Population Density : </strong>' + city.lastPopDensity + ' </div> ' +
         '<div><strong>State : </strong>' + city.state + ' </div> ' +
         '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
-        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons To</a></div>' +
+        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons</a></div>' +
+        '<div id="weather-info"><a href="#" ng-click="getWeatherHandler(\'' + city.yearRank + '\')">Weather</a></div>' +
+        '</div>' +
+        '</div>';
+      return $compile(_content)($scope); //contentString; RETURN'd as ARRAY!!
+    }
+
+    function getContentStringWeather(city, weather) {
+
+      var _content = '<div id="content">' +
+        '<div id="siteNotice">' +
+        '</div>' +
+        '<h1 class="firstHeading">' + city.city + '</h1>' +
+        '<div class="bodyContent">' +
+        '<div><strong>Total Population : </strong>' + city.yearEstimate + '</div> ' +
+        '<div><strong>2010 Census : </strong>' + city.lastCensus + '</div> ' +
+        '<div><strong>Population Change : </strong>' + city.change + ' </div> ' +
+        '<div><strong>Population Density : </strong>' + city.lastPopDensity + ' </div> ' +
+        '<div><strong>State : </strong>' + city.state + ' </div> ' +
+        '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
+        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons</a></div>' +
+        '<div class="weather-info"><h3>Weather Conditions</h3></div>' +
+        '<div><div class="left-side"><strong>&nbsp;Temp : </strong>' + weather.currTemp + '</div><div class="right-side"><img ng-src="' + weather.weatherIconURL + '"> </div></div> ' +
         '</div>' +
         '</div>';
       return $compile(_content)($scope); //contentString; RETURN'd as ARRAY!!
