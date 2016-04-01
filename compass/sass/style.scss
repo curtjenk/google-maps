@@ -41,3 +41,14 @@
 select {
   height: 20px;
 }
+
+.weather-info {
+  font-weight: bold;
+  font-style: italic;
+  .left-side {
+    float: left;
+  }
+  .right-side {
+    float: right;
+  }
+}
