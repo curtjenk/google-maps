@@ -20,8 +20,12 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       return $mdSidenav('right').isOpen();
     };
 
+    //are these two really $scope variables? (not shared/seen in the view)
     $scope.markers = [];
+    $scope.placesMarkers = [];
+    //------------------------------
     $scope.cities = cities;
+
 
     $scope.map = new google.maps.Map(document.getElementById('map'), {
       zoom: originalZoom,
@@ -30,13 +34,14 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
 
     directionsDisplay.setMap($scope.map);
 
+    
     $scope.example1model = [];
     $scope.example1data = normalizedPlaces(); //[ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
     $scope.example5customTexts = {
       buttonDefaultText: 'Place Types'
     };
     $scope.example10settings = {
-      selectionLimit: 5
+     selectionLimit: 1
     };
 
     var clickedOnMarker = new google.maps.Marker({});
@@ -62,12 +67,20 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
 
     $scope.showInfoClick = function(mNdx) {
       var _aPlaceTypes = [];
-
-      for (i = 0; i < $scope.example1model.length; i++) {
-        _aPlaceTypes.push($scope.example1data[$scope.example1model[i].id].original);
-      }
-
-      //console.log(_aPlaceTypes);
+      //NOTE: if selectionLimit is 1, example1model will be an object not an array
+      //https://github.com/dotansimha/angularjs-dropdown-multiselect/issues/151
+      if ($scope.example1model.length === 0 && $scope.example1model.id !== undefined) {
+            _aPlaceTypes.push($scope.example1data[$scope.example1model.id].original);
+      } else {
+        for (i = 0; i < $scope.example1model.length; i++) {
+          _aPlaceTypes.push($scope.example1data[$scope.example1model[i].id].original);
+        }
+     }
+      // console.log(typeof($scope.example1model));
+      // console.log($scope.example1model);
+      // console.log($scope.example1model.id);
+      // console.log($scope.example1model.length);
+      // console.log(_aPlaceTypes);
 
       if (_aPlaceTypes.length > 0) {
         // what we want to do?
@@ -86,7 +99,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         lng: $scope.markers[ndxOfCityClicked].position.lng()
       };
 
-      ///???? do we really need to create a new map?
+      ///???? do we really need to create a new map?  YES!
       $scope.map = new google.maps.Map(document.getElementById('map'), {
         center: cityLocation,
         zoom: 10
@@ -97,7 +110,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
 
       var service = new google.maps.places.PlacesService($scope.map);
 
-      console.log(_arr);
+      //console.log(_arr);
       service.nearbySearch({
         location: cityLocation,
         radius: 50000,
@@ -108,6 +121,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
     function placesSearchcallback(results, status) {
       //console.log(results);
       if (status === google.maps.places.PlacesServiceStatus.OK) {
+        deleteMarkers($scope.placesMarkers); //from any previous searches
         for (var i = 0; i < results.length; i++) {
           createPlacesMarker(results[i]);
         }
@@ -130,6 +144,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         infowindow.setContent(place.name); //contentString[0]);
         infowindow.open($scope.map, marker);
       });
+      $scope.placesMarkers.push(marker);
     }
 
     var zoomAnimator = new ZoomAnimator({
@@ -348,7 +363,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
           .then(function() {
             $log.debug("toggle " + navID + " is done");
           });
-      }
+      };
     }
 
   })
@@ -369,3 +384,4 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         });
     };
   });
+
