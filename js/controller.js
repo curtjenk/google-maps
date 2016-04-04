@@ -114,7 +114,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       service.nearbySearch({
         location: cityLocation,
         radius: 50000,
-        type: _arr //use array of selected placesTypes
+        //type: _arr //use array of selected placesTypes
+        type: _arr[0] //As of 2/16/2016 google only supports 1 type per search
       }, placesSearchcallback);
     }
 
@@ -294,7 +295,23 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
     for (var i = 0; i < cities.length; i++) {
       createMarker(cities[i]);
     }
-
+    //used to ensure filter is done only on the city name and not other properties of the City object
+    $scope.cityFilterComparator = function(input, searchParam) {
+      if (input && input.city) {
+        var upCity = input.city.toUpperCase();
+        var upSearchParam = searchParam.toUpperCase();
+         //console.log("input=" + upCity + ' : searching for ' + upSearchParam);
+        if (upCity.indexOf(upSearchParam) != -1) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    };
+    //------ End custom filter comparator
     function calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue) {
       console.log(_latLonValue);
 

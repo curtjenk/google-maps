@@ -1,3 +1,5 @@
+
+
 function City(yearRank,city,state,yearEstimate,lastCensus,change,landArea,landAreaInKm,lastPopDensity,lastPopDensityInKM,latLon){
     this.yearRank = yearRank;
     this.city = city;

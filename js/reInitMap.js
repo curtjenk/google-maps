@@ -9,7 +9,7 @@ function reInitMap() {
     //clear any city Markers
     clearMarkers($scope.markers);  //just in case they were not previously cleared
     //Add city markers
-    addCityMarkers();
+    addCityMarkers($scope.markers);
 
 }
 
@@ -21,11 +21,11 @@ function deleteMarkers(markersArray) {
 
 function clearMarkers(markersArray) {
     for (var i = 0; i < markersArray.length; i++) {
-        markersArray.setMap(null);
+        markersArray[i].setMap(null);
     }
 }
 function addMarkers(markersArray) {
     for (var i = 0; i < markersArray.length; i++) {
-        markersArray.setMap($scope.map);
+        markersArray[i].setMap($scope.map);
     }
 }
