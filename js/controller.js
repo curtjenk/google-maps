@@ -4,7 +4,8 @@ var mapsApp = angular.module('mapsApp', [
   'ngMaterial'
 ]);
 
-mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSidenav, $log) {
+mapsApp.controller('mapsController', function($scope, $compile, $timeout,
+    $mdSidenav, $log) {
 
 
     var originalCenter = new google.maps.LatLng(40.0000, -98.0000);
@@ -34,14 +35,14 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
 
     directionsDisplay.setMap($scope.map);
 
-    
+
     $scope.example1model = [];
     $scope.example1data = normalizedPlaces(); //[ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
     $scope.example5customTexts = {
       buttonDefaultText: 'Place Types'
     };
     $scope.example10settings = {
-     selectionLimit: 1
+      selectionLimit: 1
     };
 
     var clickedOnMarker = new google.maps.Marker({});
@@ -62,20 +63,25 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
     };
 
     $scope.onChangeHandler = function(_latLonValue) {
-      calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue);
+      calculateAndDisplayRoute(directionsService, directionsDisplay,
+        _latLonValue);
     };
 
     $scope.showInfoClick = function(mNdx) {
       var _aPlaceTypes = [];
       //NOTE: if selectionLimit is 1, example1model will be an object not an array
       //https://github.com/dotansimha/angularjs-dropdown-multiselect/issues/151
-      if ($scope.example1model.length === 0 && $scope.example1model.id !== undefined) {
-            _aPlaceTypes.push($scope.example1data[$scope.example1model.id].original);
+      if ($scope.example1model.length === 0 && $scope.example1model.id !==
+        undefined) {
+        _aPlaceTypes.push($scope.example1data[$scope.example1model.id].original);
       } else {
         for (i = 0; i < $scope.example1model.length; i++) {
-          _aPlaceTypes.push($scope.example1data[$scope.example1model[i].id].original);
+          _aPlaceTypes.push($scope.example1data[$scope.example1model[i].id]
+            .original);
         }
-     }
+      }
+
+      $mdSidenav('right').close();
       // console.log(typeof($scope.example1model));
       // console.log($scope.example1model);
       // console.log($scope.example1model.id);
@@ -197,7 +203,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       //   lat: point.lat(),
       //   lng: point.lng()
       // }, destinationPoint);
-      console.log("Starting the zoom out at " + $scope.map.getZoom() + " End=6");
+      console.log("Starting the zoom out at " + $scope.map.getZoom() +
+        " End=6");
       zoomAnimator.zoomOut(
         $scope.map.getZoom(),
         6,
@@ -212,6 +219,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
           }, destinationPoint);
         }
       );
+
+      $mdSidenav('right').close();
 
     };
 
@@ -252,14 +261,19 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         '</div>' +
         '<h1 class="firstHeading">' + city.city + '</h1>' +
         '<div class="bodyContent">' +
-        '<div><strong>Total Population : </strong>' + city.yearEstimate + '</div> ' +
+        '<div><strong>Total Population : </strong>' + city.yearEstimate +
+        '</div> ' +
         '<div><strong>2010 Census : </strong>' + city.lastCensus + '</div> ' +
-        '<div><strong>Population Change : </strong>' + city.change + ' </div> ' +
-        '<div><strong>Population Density : </strong>' + city.lastPopDensity + ' </div> ' +
+        '<div><strong>Population Change : </strong>' + city.change +
+        ' </div> ' +
+        '<div><strong>Population Density : </strong>' + city.lastPopDensity +
+        ' </div> ' +
         '<div><strong>State : </strong>' + city.state + ' </div> ' +
         '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
-        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons</a></div>' +
-        '<div id="weather-info"><a href="#" ng-click="getWeatherHandler(\'' + city.yearRank + '\')">Weather</a></div>' +
+        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon +
+        '\')">Directons</a></div>' +
+        '<div id="weather-info"><a href="#" ng-click="getWeatherHandler(\'' +
+        city.yearRank + '\')">Weather</a></div>' +
         '</div>' +
         '</div>';
       return $compile(_content)($scope); //contentString; RETURN'd as ARRAY!!
@@ -272,20 +286,28 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         '</div>' +
         '<h1 class="firstHeading">' + city.city + '</h1>' +
         '<div class="bodyContent">' +
-        '<div><strong>Total Population : </strong>' + city.yearEstimate + '</div> ' +
+        '<div><strong>Total Population : </strong>' + city.yearEstimate +
+        '</div> ' +
         '<div><strong>2010 Census : </strong>' + city.lastCensus + '</div> ' +
-        '<div><strong>Population Change : </strong>' + city.change + ' </div> ' +
-        '<div><strong>Population Density : </strong>' + city.lastPopDensity + ' </div> ' +
+        '<div><strong>Population Change : </strong>' + city.change +
+        ' </div> ' +
+        '<div><strong>Population Density : </strong>' + city.lastPopDensity +
+        ' </div> ' +
         '<div><strong>State : </strong>' + city.state + ' </div> ' +
         '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
-        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon + '\')">Directons</a></div>' +
-        '<div class="weather-info">' + 
-              '<div class="left-side">' + 
-                    '<h3>Weather Conditions</h3>' +
-                    '<div id="left-left">&deg;' + weather.currTemp + '</div><div id="right-left">' + weather.weatherMain +'</div>' + 
-                    '<div id="ico"><img ng-src="img/sun.ico"> ' + weather.sunriseLocalTime() + ' <img ng-src="img/moon.ico"> ' + weather.sunsetLocalTime() + '</div>' + 
-              '</div>' +
-              '<div class="right-side"><img ng-src="' + weather.weatherIconURL + '"></div> ' +
+        '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon +
+        '\')">Directons</a></div>' +
+        '<div class="weather-info">' +
+        '<div class="left-side">' +
+        '<h3>Weather Conditions</h3>' +
+        '<div id="left-left">&deg;' + weather.currTemp +
+        '</div><div id="right-left">' + weather.weatherMain + '</div>' +
+        '<div id="ico"><img ng-src="img/sun.ico"> ' + weather.sunriseLocalTime() +
+        ' <img ng-src="img/moon.ico"> ' + weather.sunsetLocalTime() +
+        '</div>' +
+        '</div>' +
+        '<div class="right-side"><img ng-src="' + weather.weatherIconURL +
+        '"></div> ' +
         '</div>' +
         '</div>';
       return $compile(_content)($scope); //contentString; RETURN'd as ARRAY!!
@@ -300,11 +322,10 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       if (input && input.city) {
         var upCity = input.city.toUpperCase();
         var upSearchParam = searchParam.toUpperCase();
-         //console.log("input=" + upCity + ' : searching for ' + upSearchParam);
+        //console.log("input=" + upCity + ' : searching for ' + upSearchParam);
         if (upCity.indexOf(upSearchParam) != -1) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       } else {
@@ -312,7 +333,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
       }
     };
     //------ End custom filter comparator
-    function calculateAndDisplayRoute(directionsService, directionsDisplay, _latLonValue) {
+    function calculateAndDisplayRoute(directionsService, directionsDisplay,
+      _latLonValue) {
       console.log(_latLonValue);
 
       var _latLon = _latLonValue.split(',', 2);
@@ -401,4 +423,3 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout, $mdSid
         });
     };
   });
-

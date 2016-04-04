@@ -63,11 +63,11 @@
 }
 
 /* line 55, ../compass/sass/style.scss */
-.md-content {
-  overflow: hidden !important;
+.mdSideNavInner {
+  overflow: hidden;
 }
 
-/* line 58, ../compass/sass/style.scss */
+/* line 59, ../compass/sass/style.scss */
 .side-pull-tab {
   background-color: white;
   width: 20px;
@@ -82,4 +82,32 @@
   border-left: 1px solid lightgray;
   border-radius: 5px;
   border-width: 1px;
+}
+
+/* line 75, ../compass/sass/style.scss */
+.toggleButton {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 222;
+}
+
+/* line 81, ../compass/sass/style.scss */
+.md-sidenav-right {
+  padding: 0;
+  box-shadow: -1px 1px 5px black;
+}
+
+/* line 85, ../compass/sass/style.scss */
+#toggle-navbar {
+  text-shadow: 1px 1px 1px black;
+  color: #034f84;
+  font-size: 80px;
+}
+
+@media screen and (min-width: 1280px) {
+  /* line 91, ../compass/sass/style.scss */
+  .md-button {
+    display: none !important;
+  }
 }
