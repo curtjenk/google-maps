@@ -18,19 +18,19 @@
             <md-content flex="">
                 <div class="toggleButton" layout="column">
                     <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
-                        <i class="large material-icons" style="font-size:48px">view_list</i>
+                        <i id="toggle-navbar" class="large material-icons">menu</i>
                     </md-button>
 
                 </div>
                 <div id="map"></div>
                 <div flex=""></div>
             </md-content>
-            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
                 <!-- <md-toolbar class="md-theme-light">
           <h1 class="md-toolbar-tools">Sidenav Right</h1>
         </md-toolbar> -->
                 <md-content class="mdSideNavInner" ng-controller="RightCtrl" layout-padding="">
-                    <md-button ng-click="close()" class="md-primary">
+                    <md-button ng-click="close()" class="md-primary closeButton">
                         <i style="font-size: 40px" class="material-icons">close</i>
                     </md-button>
                     <div class="places-select" ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example10settings"></div>

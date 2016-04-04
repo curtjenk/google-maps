@@ -54,7 +54,7 @@
 // }
 .mdSideNavInner {
   overflow: hidden;
-  box-shadow: -1px 1px 5px black;
+
 }
 .side-pull-tab {
   background-color: white;
@@ -74,7 +74,21 @@
 }
 .toggleButton {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 5px;
+  top: 5px;
   z-index: 222;
+}
+.md-sidenav-right {
+  padding: 0;
+  box-shadow: -1px 1px 5px black;
+}
+#toggle-navbar {
+  text-shadow: 1px 1px 1px black;
+  color: #034f84;
+  font-size: 80px;
+}
+@media screen and (min-width: 1280px) {
+  .md-button {
+    display: none !important;
+  }
 }
