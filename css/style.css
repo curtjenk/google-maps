@@ -9,34 +9,57 @@
 }
 
 /* line 12, ../compass/sass/style.scss */
-.btn-group {
-  display: inline;
-}
-
-/* line 15, ../compass/sass/style.scss */
 .places-select {
   padding: 0;
 }
 
-/* line 19, ../compass/sass/style.scss */
+/* line 16, ../compass/sass/style.scss */
 .btn-group .dropdown-toggle {
   width: 100%;
 }
-/* line 22, ../compass/sass/style.scss */
+/* line 19, ../compass/sass/style.scss */
 .btn-group .btn:first-child {
   margin-bottom: 20px;
 }
 
-/* line 45, ../compass/sass/style.scss */
+/* line 23, ../compass/sass/style.scss */
 .weather-info {
   font-weight: bold;
   font-style: italic;
 }
-/* line 48, ../compass/sass/style.scss */
+/* line 26, ../compass/sass/style.scss */
 .weather-info .left-side {
   float: left;
 }
-/* line 51, ../compass/sass/style.scss */
+/* line 29, ../compass/sass/style.scss */
 .weather-info .right-side {
   float: right;
+}
+
+/* line 33, ../compass/sass/style.scss */
+.md-sidenav-right {
+  padding-left: 12px;
+  background-color: transparent;
+}
+
+/* line 40, ../compass/sass/style.scss */
+.md-content {
+  overflow: hidden !important;
+}
+
+/* line 43, ../compass/sass/style.scss */
+.side-pull-tab {
+  background-color: white;
+  width: 20px;
+  height: 60px;
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  z-index: 200;
+  padding: 2px;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-radius: 5px;
+  border-width: 1px;
 }
