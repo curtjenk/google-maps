@@ -14,15 +14,15 @@ var WeatherSearchResults = function(data) {
     this.sunsetEpoch = data.sunset;
     this.country = data.country;
 };
-WeatherSearchResults.prototype.sunriseToDate = function() {
+WeatherSearchResults.prototype.sunriseLocalTime = function() {
     var d = new Date(0); 
     d.setUTCSeconds(this.sunriseEpoch);
-    return d;
+    return d.toLocaleTimeString();
 };
-WeatherSearchResults.prototype.sunsetToDate = function() {
+WeatherSearchResults.prototype.sunsetLocalTime = function() {
     var d = new Date(0); 
     d.setUTCSeconds(this.sunsetEpoch);
-    return d;
+    return d.toLocaleTimeString();
 };
 
 function weatherSearchByCity(inputCity, apiKey, callBackFunc) {
