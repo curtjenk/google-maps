@@ -37,10 +37,10 @@
                     <input type="text" ng-model="cityFilter" placeholder="Filter by City">
                     <div ng-repeat="city in cities | filter:cityFilter:cityFilterComparator as results" class="left">
                         <div class="info-button">
-                            <a href="" ng-click="zoomClick($index)">
+                            <a href="" ng-click="zoomClick(city.yearRank)">
                                 <i class="material-icons">location_searching</i>
                             </a>
-                            <a href="#" ng-click="showInfoClick($index)">{{city.city}}</a>
+                            <a href="#" ng-click="showInfoClick(city.yearRank)">{{city.city}}</a>
                         </div>
                     </div>
                     <div ng-if="results.length == 0">

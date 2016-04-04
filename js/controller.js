@@ -67,7 +67,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         _latLonValue);
     };
 
-    $scope.showInfoClick = function(mNdx) {
+    $scope.showInfoClick = function(cityYearRank) {
+      var mNdx = Number(cityYearRank) - 1;
       var _aPlaceTypes = [];
       //NOTE: if selectionLimit is 1, example1model will be an object not an array
       //https://github.com/dotansimha/angularjs-dropdown-multiselect/issues/151
@@ -187,7 +188,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
     //     $scope.map.setZoom(4);
     // });
 
-    $scope.zoomClick = function(mNdx) {
+    $scope.zoomClick = function(cityYearRank) {
+     var mNdx = Number(cityYearRank) - 1;
       //trigger a click event on a particular marker
       // $scope.map.panTo($scope.markers[mNdx].position);
 
