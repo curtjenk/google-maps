@@ -45,3 +45,29 @@
     float: right;
   }
 }
+.md-sidenav-right {
+  padding-left: 12px;
+  background-color: transparent;
+}
+// .md-whiteframe-4dp {
+//   box-shadow: none;
+// }
+.md-content {
+  overflow: hidden !important;
+}
+.side-pull-tab {
+  background-color: white;
+  width: 20px;
+  height: 60px;
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  z-index: 200;
+  padding: 2px;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-radius: 5px;
+  border-width: 1px;
+  // border: 1px dotted red;
+}
