@@ -25,8 +25,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
     $scope.markers = [];
     $scope.placesMarkers = [];
     //------------------------------
+    $scope.cityFilter = "";
     $scope.cities = cities;
-
 
     $scope.map = new google.maps.Map(document.getElementById('map'), {
       zoom: originalZoom,
@@ -169,12 +169,12 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         $scope.map.setZoom(clickZoom);
       },
       finalCallBack: function() {
-        console.log("Zooming in");
+        //console.log("Zooming in");
         zoomAnimator.zoomIn(
           $scope.map.getZoom(),
           11,
           function(zoom) {
-            console.log("IN = " + zoom);
+          //  console.log("IN = " + zoom);
             $scope.map.setZoom(zoom);
           },
           function() {}
@@ -199,19 +199,14 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         lat: $scope.markers[mNdx].position.lat(),
         lng: $scope.markers[mNdx].position.lng()
       };
-      //$scope.map.setZoom(clickZoom);
-
-      // easingAnimator.easeProp({
-      //   lat: point.lat(),
-      //   lng: point.lng()
-      // }, destinationPoint);
-      console.log("Starting the zoom out at " + $scope.map.getZoom() +
-        " End=6");
+      
+      // console.log("Starting the zoom out at " + $scope.map.getZoom() +
+      //  " End=6");
       zoomAnimator.zoomOut(
         $scope.map.getZoom(),
         6,
         function(zoom) {
-          console.log("OUT = " + zoom);
+         // console.log("OUT = " + zoom);
           $scope.map.setZoom(zoom);
         },
         function() {
@@ -319,6 +314,35 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
     for (var i = 0; i < cities.length; i++) {
       createMarker(cities[i]);
     }
+    // -------- begin reset
+    $scope.reInitMap = function() {
+      $scope.map.setCenter(originalCenter);
+      $scope.map.setZoom(originalZoom);
+      deleteMarkers($scope.placesMarkers);
+      clearMarkers($scope.markers);  
+      addMarkers($scope.markers);
+      infowindow.close();
+      console.log($scope.cityFilter);
+      //$scope.cityFilter = "";
+    };
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers(markersArray) {
+      clearMarkers(markersArray);
+      markersArray = [];
+    }
+
+    function clearMarkers(markersArray) {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap(null);
+        }
+    }
+    function addMarkers(markersArray) {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap($scope.map);
+        }
+    }
+    //------- End of reset code
+
     //used to ensure filter is done only on the city name and not other properties of the City object
     $scope.cityFilterComparator = function(input, searchParam) {
       if (input && input.city) {
