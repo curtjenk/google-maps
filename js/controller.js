@@ -25,7 +25,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
     $scope.markers = [];
     $scope.placesMarkers = [];
     //------------------------------
-    $scope.cityFilter = "";
+    // $scope.cityFilter = "";
     $scope.cities = cities;
 
     $scope.map = new google.maps.Map(document.getElementById('map'), {
@@ -51,10 +51,8 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
       var apiKey = '7496eb8b9ef9616cf145982ce0a992fe';
       var cityNdx = Number(cityYearRank) - 1;
       var city = cities[cityNdx];
-      // console.log(city);
+     
       weatherSearchByCity(city.city, apiKey, function(weatherData) {
-        // console.log(weatherData);
-        // console.log(weatherData.sunriseToDate());
         var contentString = getContentStringWeather(city, weatherData);
         infowindow.setContent(contentString[0]);
         infowindow.open($scope.map, clickedOnMarker);
@@ -81,13 +79,10 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
             .original);
         }
       }
+      //clear checked places:
+      $scope.example1model = [];
 
       $mdSidenav('right').close();
-      // console.log(typeof($scope.example1model));
-      // console.log($scope.example1model);
-      // console.log($scope.example1model.id);
-      // console.log($scope.example1model.length);
-      // console.log(_aPlaceTypes);
 
       if (_aPlaceTypes.length > 0) {
         // what we want to do?
@@ -111,9 +106,6 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         center: cityLocation,
         zoom: 10
       });
-
-      // $scope.map.setCenter(cityLocation);
-      // $scope.map.setZoom(10);
 
       var service = new google.maps.places.PlacesService($scope.map);
 
@@ -142,11 +134,6 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         map: $scope.map,
         position: place.geometry.location
       });
-
-      //  google.maps.event.addListener(marker, 'click', function() {
-      //      infowindow.setContent(place.name);
-      //      infowindow.open($scope.map, this);
-      //  });
 
       marker.addListener('click', function() {
         infowindow.setContent(place.name); //contentString[0]);
@@ -181,12 +168,6 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         );
       }
     });
-
-
-    // var easingAnimator = EasingAnimator.makeFromCallback(function(latLng) {
-    //     $scope.map.setCenter(latLng);
-    //     $scope.map.setZoom(4);
-    // });
 
     $scope.zoomClick = function(cityYearRank) {
      var mNdx = Number(cityYearRank) - 1;
@@ -268,7 +249,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
         '<div><strong>State : </strong>' + city.state + ' </div> ' +
         '<div><strong>Land Area : </strong>' + city.landArea + '</div>' +
         '<div><a href="#" ng-click="onChangeHandler(\'' + city.latLon +
-        '\')">Directons</a></div>' +
+        '\')">Directons From Atlanta</a></div>' +
         '<div id="weather-info"><a href="#" ng-click="getWeatherHandler(\'' +
         city.yearRank + '\')">Weather</a></div>' +
         '</div>' +
@@ -322,8 +303,13 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
       clearMarkers($scope.markers);  
       addMarkers($scope.markers);
       infowindow.close();
-      console.log($scope.cityFilter);
-      //$scope.cityFilter = "";
+      //  console.log($("#cityFilterInput").val());
+      // console.log($scope.cityFilter);
+
+      // $("#cityFilterInput").val("");
+      $scope.cityFilter = undefined;
+      $scope.example1model = [];
+      
     };
     // Deletes all markers in the array by removing references to them.
     function deleteMarkers(markersArray) {
@@ -361,12 +347,10 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
     //------ End custom filter comparator
     function calculateAndDisplayRoute(directionsService, directionsDisplay,
       _latLonValue) {
-      console.log(_latLonValue);
-
+      // console.log(_latLonValue);
       var _latLon = _latLonValue.split(',', 2);
 
-      console.log(_latLon);
-
+      // console.log(_latLon);
       var lat = Number(_latLon[0]);
       var lon = Number(_latLon[1]);
 
