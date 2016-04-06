@@ -10,6 +10,14 @@ angular.module('dcCities', [])
       masterMap = map;
     }
 
+    function setCities(citees) {
+      citeesMap = citiees;
+    }
+
+    function getCities() {
+      return citeesMap;
+    }
+
     function get() {
       // console.log(typeof(masterMap));
       if (typeof(masterMap) === 'undefined') {
@@ -21,6 +29,8 @@ angular.module('dcCities', [])
 
     return {
       set: set,
-      get: get
+      get: get,
+      setCities: setCities,
+      getCities: getCities
     }
   });

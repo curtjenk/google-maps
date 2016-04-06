@@ -12,40 +12,7 @@
     </head>
 
     <body>
-      <div ng-controller="homeController" layout="column" style="height: 500px" ng-cloak="">
-      <section layout="row" flex="">
-          <md-content flex="">
-              <div class="toggleButton" layout="column">
-                  <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
-                      <i id="toggle-navbar" class="large material-icons">menu</i>
-                  </md-button>
-
-              </div>
-              <div id="map"></div>
-              <div flex=""></div>
-          </md-content>
-          <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
-              <md-content class="mdSideNavInner" ng-controller="RightCtrl" layout-padding="">
-                  <md-button ng-click="close()" class="md-primary closeButton">
-                      <i style="font-size: 40px" class="material-icons">close</i>
-                  </md-button>
-                  <div class="places-select" ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example10settings"></div>
-                  <!-- <input type="text" ng-model="cityFilter" placeholder="Filter by City"> -->
-                  <!-- <div ng-repeat="city in cities | filter:cityFilter:cityFilterComparator as results" class="left">
-                      <div class="info-button">
-                          <a href="" ng-click="zoomClick(city.yearRank)">
-                              <i class="material-icons">location_searching</i>
-                          </a>
-                          <a href="#" ng-click="showInfoClick(city.yearRank)">{{city.city}}</a>
-                      </div>
-                  </div> -->
-                  <!-- <div ng-if="results.length == 0">
-                      <strong>No results found...</strong>
-                  </div> -->
-              </md-content>
-          </md-sidenav>
-      </section>
-    </div>
+      <div ng-include="'app/components/navigator/navigator.html'"></div>
       <div ng-view></div>
 
     <!-- <body ng-controller="mapsController" layout="column" style="height: 500px" ng-cloak="">
@@ -101,7 +68,9 @@
         <script type="text/javascript" src="assets/js/googleplacestypes.js"></script>
         <script type="text/javascript" src="assets/js/reInitMap.js"></script>
         <script type="text/javascript" src="app/services/cityservices.js"></script>
-        <script type="text/javascript" src="app/app.js"></script>
+        <script type="text/javascript" src="app/app.module.js"></script>
+        <script type="text/javascript" src="app/components/navigator/navController.js"></script>
+
     </body>
 
 </html>
