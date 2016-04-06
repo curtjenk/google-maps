@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html ng-app="mapsApp">
+<html ng-app="mapApp">
 
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Google Maps w/Angular</title>
-        <!-- <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css"> -->
-        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.css">
+        <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="vendors/angularjs-multiselect/pages/stylesheets/stylesheet.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link type="text/css" rel="stylesheet" href="node_modules/angular-multiselect/dist/multiselect.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     </head>
 
-    <body ng-controller="mapsController" layout="column" style="height: 500px" ng-cloak="">
+    <body>
+      <div ng-view></div>
+
+    <!-- <body ng-controller="mapsController" layout="column" style="height: 500px" ng-cloak="">
         <section layout="row" flex="">
             <md-content flex="">
                 <div class="toggleButton" layout="column">
@@ -25,9 +27,6 @@
                 <div flex=""></div>
             </md-content>
             <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
-                <!-- <md-toolbar class="md-theme-light">
-          <h1 class="md-toolbar-tools">Sidenav Right</h1>
-        </md-toolbar> -->
                 <md-content class="mdSideNavInner" ng-controller="RightCtrl" layout-padding="">
                     <md-button ng-click="close()" class="md-primary closeButton">
                         <i style="font-size: 40px" class="material-icons">close</i>
@@ -47,28 +46,28 @@
                     </div>
                 </md-content>
             </md-sidenav>
-        </section>
+        </section> -->
         <!-- <md-grid-list md-cols="4" md-row-height="200px" ...>
   <md-grid-tile></md-grid-tile>
 </md-grid-list> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="node_modules/angular-route/angular-route.min.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.js"></script>
+        <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+        <script src="node_modules/angular-material/angular-material.min.js"></script>
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI&libraries=places&v=3.exp"></script>
-        <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
-        <!-- <script type="text/javascript" src="vendors/groundwork-master/js/groundwork.all.js"></script> -->
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
-        <script type="text/javascript" src="vendors/angularjs-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
-        <script type="text/javascript" src="js/cities.js"></script>
-        <script type="text/javascript" src="js/EasingAnimator.js"></script>
-        <script type="text/javascript" src="js/WeatherInfoByCity.js"></script>
-        <script type="text/javascript" src="js/googleplacestypes.js"></script>
-        <script type="text/javascript" src="js/reInitMap.js"></script>
-        <script type="text/javascript" src="js/controller.js"></script>
+        <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="node_modules/lodash/dist/lodash.js"></script>
+        <script type="text/javascript" src="node_modules/angular-multiselect/dist/multiselect.js"></script>
+        <script type="text/javascript" src="assets/js/cities.js"></script>
+        <script type="text/javascript" src="assets/js/EasingAnimator.js"></script>
+        <script type="text/javascript" src="assets/js/WeatherInfoByCity.js"></script>
+        <script type="text/javascript" src="assets/js/googleplacestypes.js"></script>
+        <script type="text/javascript" src="assets/js/reInitMap.js"></script>
+        <script type="text/javascript" src="app/services/cityservices.js"></script>
+        <script type="text/javascript" src="app/app.js"></script>
     </body>
 
 </html>

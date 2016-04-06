@@ -1,0 +1,10 @@
+<div id="map"></div>
+<div id="map-panel" ng-hide="hidePanel">
+  <ol>
+    <li ng-repeat="city in cities track by $index">
+      <div class="city-name">{{city.city}}</div>
+      <div ng-click="cityClick($index)" class="blue-button"><img src="http://icons.iconarchive.com/icons/rimshotdesign/nod2/512/Toolbar-Regular-Get-Info-icon.png"> Show Info</div>
+      <a ng-href="/#/city/{{$index}}" class="zoom-button"><img src="http://blog.jobtiger.bg/wp-content/uploads/2012/10/tursene.png"> Zoom In</a>
+    </li>
+  </ol>
+</div>

@@ -1,0 +1,17 @@
+<div id="city-map"></div>
+<div id="map-panel">
+  <!-- Add a new button to reset the map -->
+  <div class="reset">
+    <a href="/#/" class="red-button">Reset Map</a>
+  </div>
+  <!-- Add a new button to reset the map -->
+  <ol>
+    <li ng-repeat="city in cities track by $index">
+      <div class="city-name">{{city.city}}</div>
+      <a href="#" ng-click="cityClick($index)" class="blue-button"><img src="http://icons.iconarchive.com/icons/rimshotdesign/nod2/512/Toolbar-Regular-Get-Info-icon.png"> Show Info</a>
+      <a ng-href="#/city/{{$index}}" class="zoom-button"><img src="http://blog.jobtiger.bg/wp-content/uploads/2012/10/tursene.png"> Zoom In</a>
+    </li>
+  </ol>
+</div>
+
+<div id="driving-directions"></div>
