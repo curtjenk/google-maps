@@ -1,5 +1,5 @@
 /* line 1, ../../_tools/compass/sass/style.scss */
-#map {
+#placesmap {
   height: 100vh;
 }
 
@@ -101,7 +101,7 @@
 }
 
 @media screen and (min-width: 1280px) {
-  /* line 79, ../../_tools/compass/sass/style.scss */
+  /* line 80, ../../_tools/compass/sass/style.scss */
   .md-button {
     display: none !important;
   }

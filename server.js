@@ -18,6 +18,18 @@
       2. advanceSettings: If set, will allow the user to set additional settings for live-server functionality
          a. logLevel: System settings for log level are: 0 = errors only, 1 = some, 2 = lots
          b. waittime: Sets the refresh rate for the live-server / browser
+         c. nobrowser: When set will turn off all other browser properties, and/or at least set them to their defaults
+         d. browser: Designates another browser to use other than system defualt. TODO: This is not functional.
+         e. openbrowser: Set the state to True/False to have live-server auto-open the browser.
+
+    Jo's Methods:
+      1. getLanIpAddress(_adapter)
+         a. Will determine the active LAN adapter and grab it's IP Address. _adapter if for designating specifically
+            'known' system adapter e.g. 'en0' for Mac's
+      2. validateYesNo(_str)
+         a. Will return a True/False state based on what _str value is. e.g. 'Yes or No'
+            In addition, will only take an argument with a length of 3 and if the argmument contains a 'y' or 'n'
+            in the first character, it will assume you meant the obvious 'yes' or 'no' response.
 */
 'use strict';
 
@@ -64,13 +76,13 @@ prompt.get({
       warning: 'Must respond yes or no',
       default: 'no',
       ask: function() {
-        return prompt.history('devMode').value === 'y'
+        return validateYesNo(prompt.history('devMode').value)
       }
     }
   }
 }, function(err, result) {
 
-  var _port, _host, _folder, _logLevel, _refreshRate;
+  var _port, _host, _folder, _logLevel, _refreshRate, _browser, _noBrowser, _autoOpenBrowser;
 
   // Ask if user wants Dev Mode
   if (result.devMode === 'yes' || result.devMode === 'y') {
@@ -99,14 +111,50 @@ prompt.get({
           message: colors.info("Set the log level.\ne.g. 0 = errors, 1 = some, 2 = lots"),
           default: 0,
           ask: function() {
-            return prompt.history('advanceSettings').value === 'y'
+            // return prompt.history('advanceSettings').value === ('y' || 'yes')
+            return validateYesNo(prompt.history('advanceSettings').value)
           }
         },
         waittime: {
           message: colors.info("Set the time in milliseconds for the browser refresh rate"),
           default: 1000,
           ask: function() {
-            return prompt.history('advanceSettings').value === 'y'
+            return validateYesNo(prompt.history('advanceSettings').value)
+          }
+        },
+        nobrowser: {
+          required: false,
+          name: 'yesno',
+          message: colors.info("Turn Off Browser?"),
+          validator: /y[es]*|n[o]?/,
+          warning: 'Must respond yes or no',
+          default: 'no',
+          ask: function() {
+            return validateYesNo(prompt.history('advanceSettings').value)
+          }
+        },
+        // TODO: This does not appear to be working. I have not found a solution as to how live-server
+        //       determines what browser attribute will be set to. e.g. 'firefox, chrome ???'
+        //       for now this is set to system default which has an empty string.
+        browser: {
+          message: colors.info(
+            "Set the browser you would like to use. Only: 'firefox, chrome, iexplorer, opera'"),
+          default: '', // system default
+          ask: function() {
+            return validateYesNo(prompt.history('advanceSettings').value) &&
+              !validateYesNo(prompt.history('nobrowser').value) // Hide if No-Browser is true;
+          }
+        },
+        openbrowser: {
+          required: false,
+          name: 'yesno',
+          message: colors.info("Auto Open Browser?"),
+          validator: /y[es]*|n[o]?/,
+          warning: 'Must respond yes or no',
+          default: 'yes',
+          ask: function() {
+            return validateYesNo(prompt.history('advanceSettings').value) &&
+              !validateYesNo(prompt.history('nobrowser').value) // Hide if No-Browser is true;
           }
         }
       }
@@ -118,13 +166,18 @@ prompt.get({
       _folder = (result.folder == '') ? '' : result.folder; // See FIXME in folder: object
       _logLevel = result.logLevel;
       _refreshRate = result.waittime;
+      _browser = result.browser;
+      _noBrowser = result.nobrowser;
+      _autoOpenBrowser = result.openbrowser;
 
       var params = {
-        port: _port, // Set the server port. Defaults to 8080.
-        host: _host, // Set the address to bind to. Defaults to 0.0.0.0.
-        root: __dirname + _folder, // Set root directory that's being server. Defaults to cwd.
-        open: true, // When false, it won't load your browser by default.
-        wait: _refreshRate, // Waits for all changes, before reloading. Defaults to 0 sec.
+        port: _port, // Defaults to 8081.
+        host: _host, // Defaults to 0.0.0.0.
+        noBrowser: validateYesNo(_noBrowser), // Defaults to 'no'
+        browser: _browser, // Defaults to 'chrome'
+        root: __dirname + _folder, // Defaults to current dir.
+        open: true, //validateYesNo(_autoOpenBrowser), // When false, it won't load your browser by default.
+        wait: _refreshRate, // Defaults to 1000 sec.
         logLevel: _logLevel // 0 = errors only, 1 = some, 2 = lots
       };
       liveServer.start(params);
@@ -180,4 +233,27 @@ function getLanIpAddress(_adapter) {
   }
 
   return (_holdIP === undefined) ? '127.0.0.1' : _holdIP; // default to localhost
+}
+
+function validateYesNo(_str) {
+
+  _str = _str.toLowerCase();
+  if (_str.length <= 3) {
+    if (_str[0] === 'y') {
+      _str = 'y';
+    } else if (_str[0] === 'n') {
+      _str = 'n';
+    } else {
+      _str = undefined;
+      console.log("[Error] - Your input did not validate correctly!");
+      alert("[Error] - Your input did not validate correctly! Enter 'yes' || 'no' ");
+    }
+  } else {
+    _str = undefined;
+    console.log("[Error] - Your input value is to long. Try 'Yes' or 'No' ");
+    alert("[Error] - Your input value is to long. Try 'yes' || 'no' ");
+  }
+
+  // Return the validatity of the statement. True if yes, False if No
+  return (_str === 'y') ? true : (_str === 'n') ? false : false;
 }

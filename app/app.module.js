@@ -1,7 +1,11 @@
 var mapApp = angular.module('mapApp', [
   'ngRoute',
-  'ngMaterial'
+  'ngMaterial',
+  'ngMap',
+  'ui.router'
 ]);
+
+//$scope.googleMapsUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCBuUUpMKUWS4jAbgJeognBWlIH3U0XUgk';
 
 
 //This code will run as soon as the route changes.
@@ -23,76 +27,43 @@ mapApp.run(function($rootScope, $location, $routeParams, $controller,
 //We add a second route for /city/*
 //Angular will take any parameter with a : in front of it as a wildcard
 //That wildcard, is what the $routeParams will use above as it's property
-mapApp.config(function($routeProvider) {
-  // $routeProvider.when('/', {
-  //   templateUrl: 'app/components/navigator/navigator.html',
-  //   controller: 'navController'
+mapApp.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise("/mapview")
+  $stateProvider
+    .state('mapviewport', {
+      url: "/mapview",
+      templateUrl: "app/components/mapviewport/placesmap.html",
+      controller: 'mapController'
+    })
+
+
+  // $routeProvider.when('/:template', {
+  //   templateUrl: 'app/components/mapviewport/mapview.html',
+  //   controller: 'mapController'
   // });
-  // $routeProvider.when('/city/:cityIndex', {
-  //   templateUrl: 'views/city.html',
-  //   controller: 'cityController'
+
+
+  // $routeProvider.when('components/mapviewport/:viewport', {
+  //   controller: 'mainController',
+  //   templateUrl: function($routeParams) {
+  //     templateFileName = 'viewport' + $routeParams.viewport + ".html";
+  //     return templateFileName;
+  //   }
+  // }).otherwise({
+  //   redirectTo: '/0'
   // });
-  $routeProvider.otherwise({
-    redirectTo: '/',
-  });
+
+
 });
 
-// mapApp.controller('mainController', function($scope, $compile, $timeout,
-//     $mdSidenav, $log) {
+// mapApp.controller("mainController", function($scope, $location, NgMap) {
 //
-//     $scope.toggleLeft = buildDelayedToggler('left');
-//     $scope.toggleRight = buildToggler('right');
-//     $scope.isOpenRight = function() {
-//       return $mdSidenav('right').isOpen();
-//     };
+//   $scope.googleMapsUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCBuUUpMKUWS4jAbgJeognBWlIH3U0XUgk';
 //
-//     /**
-//      * Supplies a function that will continue to operate until the
-//      * time is up.
-//      */
-//     function debounce(func, wait, context) {
-//       var timer;
-//
-//       return function debounced() {
-//         var context = $scope,
-//           args = Array.prototype.slice.call(arguments);
-//         $timeout.cancel(timer);
-//         timer = $timeout(function() {
-//           timer = undefined;
-//           func.apply(context, args);
-//         }, wait || 10);
-//       };
-//     }
-//
-//     /**
-//      * Build handler to open/close a SideNav; when animation finishes
-//      * report completion in console
-//      */
-//     function buildDelayedToggler(navID) {
-//       return debounce(function() {
-//         $mdSidenav(navID)
-//           .toggle()
-//           .then(function() {
-//             $log.debug("toggle " + navID + " is done");
-//           });
-//       }, 200);
-//     }
-//
-//     function buildToggler(navID) {
-//       return function() {
-//         $mdSidenav(navID)
-//           .toggle()
-//           .then(function() {
-//             $log.debug("toggle " + navID + " is done");
-//           });
-//       };
-//     }
-//   })
-//   .controller('RightCtrl', function($scope, $timeout, $mdSidenav, $log) {
-//     $scope.close = function() {
-//       $mdSidenav('right').close()
-//         .then(function() {
-//           $log.debug("close RIGHT is done");
-//         });
-//     };
+//   NgMap.getMap().then(function(map) {
+//     console.log(map.getCenter());
+//     console.log('markers', map.markers);
+//     console.log('shapes', map.shapes);
 //   });
+//
+// });

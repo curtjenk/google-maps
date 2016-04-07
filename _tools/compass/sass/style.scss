@@ -1,4 +1,4 @@
-#map {
+#placesmap {
   height: 100vh;
 }
 .info-button {
@@ -75,6 +75,7 @@
   color: #034f84;
   font-size: 80px;
 }
+
 @media screen and (min-width: 1280px) {
   .md-button {
     display: none !important;

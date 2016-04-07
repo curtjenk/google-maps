@@ -1,9 +1,5 @@
-var mapApp = angular.module('mapApp', [
-  'ngMaterial'
-]);
-
 // create the controller and inject Angular's $scope, as well as our service.
-mapApp.controller("navController", function($scope, $compile, $timeout,
+mapApp.controller("navController", function($scope, $timeout,
     $mdSidenav, $log) {
 
     $scope.toggleLeft = buildDelayedToggler('left');
