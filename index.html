@@ -13,21 +13,20 @@
 
     <body ng-controller="mapController" ng-cloak="">
 
-      <section>
-          <md-content>
-              <div ng-controller="navController">
-                <div class="toggleButton">
-                  <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
-                      <i id="toggle-navbar" class="large material-icons">menu</i>
-                  </md-button>
-              </div>
+        <section ng-controller="navController" layout="row" flex="">
+            <md-content flex="">
+                <div layout="column" layout-fill="" layout-align="top center">
+                    <div class="toggleButton">
+                        <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
+                            <i id="toggle-navbar" class="large material-icons">menu</i>
+                        </md-button>
+                    </div>
+                </div>
 
-              <div ng-include="'app/components/navigator/navigation.html'"></div>
-            </div>
-
-            <!-- Central Map ViewPort -->
-            <div ui-view></div>
-          </md-content>
+                <!-- Central Map ViewPort -->
+                <div flex="" ui-view></div>
+            </md-content>
+            <div ng-include="'app/components/navigator/navigation.html'"></div>
         </section>
 
         <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
