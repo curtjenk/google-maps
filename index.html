@@ -1,77 +1,89 @@
 <!DOCTYPE html>
 <html ng-app="mapsApp">
 
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Google Maps</title>
-        <!-- <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css"> -->
-        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="vendors/angularjs-multiselect/pages/stylesheets/stylesheet.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps</title>
+    <!-- <link type="text/css" rel="stylesheet" href="vendors/groundwork-master/css/groundwork.css"> -->
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="vendors/angularjs-multiselect/pages/stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
 
-    <body ng-controller="mapsController" layout="column" style="height: 500px" ng-cloak="">
-        <section layout="row" flex="">
-            <md-content flex="">
-                <div class="toggleButton" layout="column">
-                    <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
-                        <i id="toggle-navbar" class="large material-icons">menu</i>
-                    </md-button>
-
-                </div>
-                <div id="map"></div>
-                <div flex=""></div>
-            </md-content>
-            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
-                <!-- <md-toolbar class="md-theme-light">
+<body ng-controller="mapsController" layout="column" style="height: 500px" ng-cloak="">
+    <modal title="......What City and State(e.g. Atlanta, GA) are you traveling from?" visible="showModal">
+        <form role="form">
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" placeholder="Enter City" />
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" placeholder="Enter State Code" />
+            </div>
+            <button type="submit" ng-click="showDirections()" class="btn btn-default">Submit</button>
+        </form>
+    </modal>
+    <section layout="row" flex="">
+        <md-content flex="">
+            <div class="toggleButton" layout="column">
+                <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
+                    <i id="toggle-navbar" class="large material-icons">menu</i>
+                </md-button>
+            </div>
+            <div id="map"></div>
+            <div flex=""></div>
+        </md-content>
+        <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
+            <!-- <md-toolbar class="md-theme-light">
           <h1 class="md-toolbar-tools">Sidenav Right</h1>
         </md-toolbar> -->
-                <md-content class="mdSideNavInner" ng-controller="RightCtrl" layout-padding="">
-                    <md-button ng-click="close()" class="md-primary closeButton">
-                        <i style="font-size: 40px" class="material-icons">close</i>
-                    </md-button>
-                    <div class="places-select" ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example10settings"></div>
-                    <input id="cityFilterInput" class="ng-scope" type="text" ng-model="cityFilter" placeholder="Filter by City">
-                    <button type="button" class="btn btn-default" ng-click="cityFilter=undefined; reInitMap()">Reset
-                            <span class="glyphicon glyphicon-refresh"></span>
-                    </button>
-                    <div ng-repeat="city in cities | filter:cityFilter:cityFilterComparator as results" class="left">
-                        <div class="info-button">
-                            <a href="" ng-click="zoomClick(city.yearRank)">
-                                <i class="material-icons">location_searching</i>
-                            </a>
-                            <a href="#" ng-click="showInfoClick(city.yearRank)">{{city.city}}</a>
-                        </div>
+            <md-content class="mdSideNavInner" ng-controller="RightCtrl" layout-padding="">
+                <md-button ng-click="close()" class="md-primary closeButton">
+                    <i style="font-size: 40px" class="material-icons">close</i>
+                </md-button>
+                <div class="places-select" ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example10settings"></div>
+                <input id="cityFilterInput" class="ng-scope" type="text" ng-model="cityFilter" placeholder="Filter by City">
+                <button type="button" class="btn btn-default" ng-click="cityFilter=undefined; reInitMap()">Reset
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+                <div id="directions">
+                </div>
+                <div ng-repeat="city in cities | filter:cityFilter:cityFilterComparator as results" class="left">
+                    <div class="info-button">
+                        <a href="" ng-click="zoomClick(city.yearRank)">
+                            <i class="material-icons">location_searching</i>
+                        </a>
+                        <a href="#" ng-click="showInfoClick(city.yearRank)">{{city.city}}</a>
                     </div>
-                    <div ng-if="results.length == 0">
-                        <strong>No match(es) found...</strong>
-                    </div>
-                </md-content>
-            </md-sidenav>
-        </section>
-        <!-- <md-grid-list md-cols="4" md-row-height="200px" ...>
-  <md-grid-tile></md-grid-tile>
-</md-grid-list> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI&libraries=places&v=3.exp"></script>
-        <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
-        <!-- <script type="text/javascript" src="vendors/groundwork-master/js/groundwork.all.js"></script> -->
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
-        <script type="text/javascript" src="vendors/angularjs-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
-        <script type="text/javascript" src="js/cities.js"></script>
-        <script type="text/javascript" src="js/EasingAnimator.js"></script>
-        <script type="text/javascript" src="js/WeatherInfoByCity.js"></script>
-        <script type="text/javascript" src="js/googleplacestypes.js"></script>
-        <!-- <script type="text/javascript" src="js/reInitMap.js"></script> -->
-        <script type="text/javascript" src="js/controller.js"></script>
-    </body>
+                </div>
+                <div ng-if="results.length == 0">
+                    <strong>No match(es) found...</strong>
+                </div>
+            </md-content>
+        </md-sidenav>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwdkkpMP_qMwWnf_dX3ozr5MCqNUkwBI&libraries=places&v=3.exp"></script>
+    <script src="vendors/groundwork-master/js/libs/modernizr-2.6.2.min.js"></script>
+    <!-- <script type="text/javascript" src="vendors/groundwork-master/js/groundwork.all.js"></script> -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"></script>
+    <script type="text/javascript" src="vendors/angularjs-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+    <script type="text/javascript" src="js/cities.js"></script>
+    <script type="text/javascript" src="js/EasingAnimator.js"></script>
+    <script type="text/javascript" src="js/WeatherInfoByCity.js"></script>
+    <script type="text/javascript" src="js/googleplacestypes.js"></script>
+    <!-- <script type="text/javascript" src="js/reInitMap.js"></script> -->
+    <script type="text/javascript" src="js/controller.js"></script>
+    <script type="text/javascript" src="js/myModal_directive.js"></script>
+</body>
 
 </html>
