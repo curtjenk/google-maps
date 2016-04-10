@@ -1,11 +1,10 @@
-
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
     <md-content class="mdSideNavInner" ng-controller="RightCtrl" layout-padding="">
-        <md-button ng-click="close()" class="md-primary closeButton">
+        <!-- <md-button ng-click="close()" class="md-primary closeButton">
             <i style="font-size: 40px" class="material-icons">close</i>
         </md-button>
-        <!-- <div class="places-select" ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example10settings"></div> -->
         <input type="text" ng-model="cityFilter" placeholder="Filter by City">
+        <h3>Top Ten</h3>
         <div ng-repeat="city in cities | filter:cityFilter:cityFilterComparator as results" class="left">
             <div class="info-button">
                 <a href="" ng-click="zoomClick(city.yearRank)">
@@ -13,6 +12,23 @@
                 </a>
                 <a href="#" ng-click="showInfoClick(city.yearRank)">{{city.city}}</a>
             </div>
-        </div>
+        </div> -->
+        <md-button ng-click="close()" class="md-primary closeButton">
+            <i style="font-size: 40px" class="material-icons">close</i>
+        </md-button><br>
     </md-content>
+    <!-- <ui-gmap-search-box template='searchBox.template' events='searchBox.events' options='searchBox.options'></ui-gmap-search-box> -->
+      <form ng-submit="onInputSubmit()">
+        <!-- <input id="places-select" type="text" ng-model="place.select" ng-change="onInputChange()" placeholder="Search for a Place"> -->
+        <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Search Item">
+        <md-item-template>
+          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+        </md-item-template>
+        <!-- <md-not-found>
+          No states matching "{{ctrl.searchText}}" were found.
+          <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+        </md-not-found> -->
+      </md-autocomplete>
+      </form>
+
 </md-sidenav>

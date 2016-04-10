@@ -2,7 +2,7 @@
     Jo's run live-sever in development mode
     ========================================
     dev-dependencies:
-          npm install prompt live-server colors --save
+          npm install prompt live-server colors connect serve-static --save
 
     Purpose:
       Allows you to run a live-server node instance while in Development mode, else
@@ -36,6 +36,8 @@
 var prompt = require('prompt');
 var colors = require('colors/safe');
 var os = require('os');
+var connect = require('connect');
+var serveStatic = require('serve-static');
 var ifaces = os.networkInterfaces();
 
 // set theme for color package
@@ -188,8 +190,6 @@ prompt.get({
   } else {
 
     // Connect the normal way without live-server capabilities.
-    var connect = require('connect');
-    var serveStatic = require('serve-static');
     connect().use(serveStatic(__dirname)).listen(8080, function() {
       console.log(colors.verbose('Non-Live Server running on localhost:8080 ...\n'));
     });

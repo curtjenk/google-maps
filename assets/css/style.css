@@ -57,12 +57,6 @@
 }
 
 /* line 43, ../../_tools/compass/sass/style.scss */
-.md-sidenav-right {
-  padding-left: 12px;
-  background-color: transparent;
-}
-
-/* line 47, ../../_tools/compass/sass/style.scss */
 .side-pull-tab {
   background-color: white;
   width: 20px;
@@ -79,7 +73,7 @@
   border-width: 1px;
 }
 
-/* line 63, ../../_tools/compass/sass/style.scss */
+/* line 59, ../../_tools/compass/sass/style.scss */
 .toggleButton {
   position: absolute;
   right: 5px;
@@ -87,21 +81,26 @@
   z-index: 222;
 }
 
-/* line 69, ../../_tools/compass/sass/style.scss */
+/* line 65, ../../_tools/compass/sass/style.scss */
 .md-sidenav-right {
-  padding: 0;
+  padding: 10px;
   box-shadow: -1px 1px 5px black;
 }
 
-/* line 73, ../../_tools/compass/sass/style.scss */
+/* line 69, ../../_tools/compass/sass/style.scss */
 #toggle-navbar {
   text-shadow: 1px 1px 1px black;
   color: #034f84;
   font-size: 80px;
 }
 
+/* line 74, ../../_tools/compass/sass/style.scss */
+.angular-google-map-container {
+  height: 100vh;
+}
+
 @media screen and (min-width: 1280px) {
-  /* line 80, ../../_tools/compass/sass/style.scss */
+  /* line 77, ../../_tools/compass/sass/style.scss */
   .md-button {
     display: none !important;
   }

@@ -1,6 +1,14 @@
 // create the controller and inject Angular's $scope, as well as our service.
-mapApp.controller("navController", function($scope, $timeout,
-    $mdSidenav, $log) {
+// mapApp.config(function(uiGmapGoogleMapApiProvider) {
+//   uiGmapGoogleMapApiProvider.configure({
+//     key: 'AIzaSyCBuUUpMKUWS4jAbgJeognBWlIH3U0XUgk',
+//     v: '3.20',
+//     libraries: 'weather,geometry,visualization,spaces'
+//   });
+// });
+
+mapApp.controller("navController", function($scope, $rootScope, $timeout,
+    $mdSidenav, $log, MapProvider) {
 
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
@@ -8,7 +16,37 @@ mapApp.controller("navController", function($scope, $timeout,
       return $mdSidenav('right').isOpen();
     };
 
-    $scope.cities = cities;
+
+    $rootScope.$on('mpStore', function(e, _data) {
+      // console.log(_data);
+      //
+      // $scope.map = {
+      //   center: _data[0].center,
+      //   zoom: _data[0].zoom
+      // };
+      // $scope.options = {
+      //   scrollwheel: _data[1].scrollwheel
+      // };
+      //
+      // $scope.searchbox = {
+      //   template: _data[2].template,
+      //   events: _data[2].events
+      // };
+    });
+
+
+
+    $scope.place = {
+      selected: ''
+    }
+
+    $scope.onInputChange = function() {
+      //MapProvider.store('placeSelected', $scope.placeselect);
+    }
+    $scope.onInputSubmit = function() {
+      MapProvider.store('placeSubmit', $scope.place.select);
+    }
+
 
     /**
      * Supplies a function that will continue to operate until the

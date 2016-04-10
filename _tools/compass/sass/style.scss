@@ -40,10 +40,6 @@
     float: right;
   }
 }
-.md-sidenav-right {
-  padding-left: 12px;
-  background-color: transparent;
-}
 .side-pull-tab {
   background-color: white;
   width: 20px;
@@ -67,7 +63,7 @@
   z-index: 222;
 }
 .md-sidenav-right {
-  padding: 0;
+  padding: 10px;
   box-shadow: -1px 1px 5px black;
 }
 #toggle-navbar {
@@ -75,6 +71,7 @@
   color: #034f84;
   font-size: 80px;
 }
+.angular-google-map-container { height: 100vh; }
 
 @media screen and (min-width: 1280px) {
   .md-button {
