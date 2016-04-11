@@ -261,7 +261,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
             var _content = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
-                '<h1 class="firstHeading">' + city.city + '</h1>' +
+                '<h1 class="info-heading">' + city.city + '</h1>' +
                 '<div class="bodyContent">' +
                 '<div><strong>Total Population : </strong>' + city.yearEstimate +
                 '</div> ' +
@@ -286,7 +286,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
             var _content = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
-                '<h1 class="firstHeading">' + city.city + '</h1>' +
+                '<h1 class="info-heading">' + city.city + '</h1>' +
                 '<div class="bodyContent">' +
                 '<div><strong>Total Population : </strong>' + city.yearEstimate +
                 '</div> ' +
@@ -326,6 +326,7 @@ mapsApp.controller('mapsController', function($scope, $compile, $timeout,
             deleteMarkers($scope.placesMarkers);
             clearMarkers($scope.markers);
             addMarkers($scope.markers);
+            directionsDisplay.setMap(null);
             infowindow.close();
             $scope.cityFilter = undefined;
             $scope.example1model = [];
